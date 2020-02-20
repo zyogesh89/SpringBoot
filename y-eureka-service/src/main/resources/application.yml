@@ -1,0 +1,11 @@
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    service-url:
+      defaultZone: http://${SERVER-HOST:localhost}:${SERVER-PORT:8411}/eureka,http://${SERVER-HOST:localhost}:${SERVER-PORT:8412}/eureka
+    server:
+     waitTimeInMsWhenSyncEmpty: 0
+     
+
+      
