@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<!-- 	<include resource="org/springframework/boot/logging/logback/base.xml"/> -->
+	<property name="HOME_LOG_PATH" value="../logs/"/>
+    <property name="HOME_LOG_DEBUG" value="store-service-debug.log"/>
+    <property name="HOME_LOG_INFO" value="store-service-info.log"/>
+    <property name="HOME_LOG_DEBUG_ARCHIVE" value="archive/store-service-debug-%d{yyyy-MM-dd}.%i.log"/>
+    <property name="HOME_LOG_INFO_ARCHIVE" value="archive/store-service-info-%d{yyyy-MM-dd}.%i.log"/>
+
+	<appender name="ConsoleDebug" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FileDebug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${HOME_LOG_PATH}${HOME_LOG_DEBUG}</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${HOME_LOG_PATH}${HOME_LOG_DEBUG_ARCHIVE}</fileNamePattern>
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>10MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20GB,it will delete old archived file -->
+            <totalSizeCap>20GB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="FileInfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${HOME_LOG_PATH}${HOME_LOG_INFO}</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${HOME_LOG_PATH}${HOME_LOG_INFO_ARCHIVE}</fileNamePattern>
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>10MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20GB,it will delete old archived file -->
+            <totalSizeCap>20GB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="debug" additivity="false">
+        <appender-ref ref="ConsoleDebug"/>
+		<appender-ref ref="FileDebug"/>
+		<appender-ref ref="FileInfo"/>
+    </logger>
+
+    <logger name="com.yogesh" level="debug" additivity="false">
+        <appender-ref ref="ConsoleDebug"/>
+		<appender-ref ref="FileDebug"/>
+		<appender-ref ref="FileInfo"/>
+    </logger>
+
+    <root level="debug">
+        <appender-ref ref="ConsoleDebug"/>
+		<appender-ref ref="FileDebug"/>
+		<appender-ref ref="FileInfo"/>
+    </root>
+
+</configuration>

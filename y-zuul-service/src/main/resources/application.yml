@@ -1,0 +1,36 @@
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${EUREKA-SERVER-HOST:localhost}:${EUREKA-SERVER-PORT:8411}/eureka/,http://${EUREKA-SERVER-HOST:localhost}:${EUREKA-SERVER-PORT:8412}/eureka/
+  instance:
+    hostname: ${SERVER-HOST:localhost}
+     
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /yogesh
+  routes:
+    store-service:
+      path: /store/**
+      serviceId: store-service
+      stripPrefix: true  
+ 
+ribbon:
+  PoolMaxThreads: 500
+  MaxTotalConnections: 500
+  MaxConnectionsPerHost: 50
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  MaxHttpConnectionsPerHost: 50
+  MaxTotalHttpConnections: 500
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+
+  hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
